@@ -94,7 +94,7 @@
 				{
 					"directoryIndex" : 3,
 					"id" : "algorithms::@4f84be16bc75261b2db5",
-					"jsonFile" : "target-algorithms-Debug-c164d231c54f4120b0f5.json",
+					"jsonFile" : "target-algorithms-Debug-fc85806b4bf1af722cc3.json",
 					"name" : "algorithms",
 					"projectIndex" : 0
 				},
@@ -118,8 +118,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/User2/CLionProjects/untitled/cmake-build-debug",
-		"source" : "C:/Users/User2/CLionProjects/untitled"
+		"build" : "C:/Users/User2/CLionProjects/untitled copy/cmake-build-debug",
+		"source" : "C:/Users/User2/CLionProjects/untitled copy"
 	},
 	"version" : 
 	{

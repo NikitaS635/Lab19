@@ -30,7 +30,7 @@ size_t strlen_(const char *begin) {
 char* find(char *begin, char *end, int ch) {
     while (begin != end && *begin != ch)
         begin++;
-    return begin;
+    return (begin != end) ? begin : NULL;
 }
 
 // Функция для поиска первого непробельного символа в строке, начиная с begin
@@ -51,8 +51,18 @@ char* findSpace(char *begin) {
 char* findNonSpaceReverse(char *rbegin, const char *rend) {
     while (rbegin != rend && isspace(*rbegin))
         rbegin--;
-    return rbegin;
+
+    // Теперь проверяем, был ли достигнут конец строки без нахождения непробельного символа
+    if (rbegin == rend) {
+        // Вся строка состоит из пробельных символов, возвращаем указатель на начало строки (rend)
+        return (char *)rend;
+    } else {
+        // Найден первый непробельный символ, возвращаем указатель на него
+        return rbegin;
+    }
 }
+
+
 
 // Функция для поиска последнего пробельного символа в строке между rbegin и rend
 char* findSpaceReverse(char *rbegin, const char *rend) {
@@ -567,4 +577,211 @@ void replace(char *source, char *w1, char *w2) {
     }
     // Завершаем строку нулевым символом
     *recPtr = '\0';
+}
+void reverseString(char *str, int start, int end) {
+    while (start < end) {
+        char temp = str[start];
+        str[start] = str[end];
+        str[end] = temp;
+        start++;
+        end--;
+    }
+}
+
+
+
+void removeLastWord(char *str) {
+    int len = strlen(str);
+    int i;
+    for (i = len - 1; i >= 0; i--) {
+        if (isspace(str[i])) {
+            // Удаляем пробелы в конце строки
+            while (isspace(str[i])) {
+                i--;
+            }
+            str[i + 1] = '\0'; // Устанавливаем конец строки
+            break;
+        }
+    }
+}
+void read_word(char *s, int *i, char *w) {
+    int j = 0;
+    while (isspace(s[*i]))
+        (*i)++;
+    while (s[*i] != '\0' && !isspace(s[*i])) {
+        w[j++] = s[(*i)++];
+    }
+    w[j] = '\0';
+}
+
+int proverka(char *w1, char *w2) {
+    int i = 0, f = 1;
+    while (w1[i] != '\0' && f == 1 && w2[i] != '\0') {
+        if (w1[i] != w2[i])
+            f = 0;
+        i++;
+    }
+    if (w1[i] != '\0' || w2[i] != '\0')
+        f = 0;
+    return f;
+}
+
+void prir(char *w, char *c) {
+    int i = 0;
+    while (w[i] != '\0') {
+        c[i] = w[i];
+        i++;
+    }
+    c[i] = '\0';
+}
+
+
+
+void removePalindromes(char *str) {
+    char result[100] = ""; // создаем пустую строку для результата
+    char word[20] = ""; // буфер для хранения текущего слова
+    int i = 0, j = 0;
+
+    while (str[i] != '\0') {
+        if (isalnum(str[i])) { // если символ буква или цифра
+            word[j++] = str[i++];
+        } else {
+            word[j] = '\0'; // завершаем строку текущего слова
+            if (!isPalindrome(word)) { // если слово не палиндром, добавляем его к результату
+                strcat(result, word);
+                strcat(result, " "); // добавляем пробел после каждого слова
+            }
+            j = 0; // сбрасываем индекс текущего слова
+            i++; // переходим к следующему символу
+        }
+    }
+
+    // добавляем последнее слово, если оно не палиндром
+    word[j] = '\0';
+    if (!isPalindrome(word)) {
+        strcat(result, word);
+    }
+
+    strcpy(str, result); // копируем результат обратно в исходную строку
+}
+// Функция для подсчета числа слов в строке
+int countWords(char *str) {
+    int count = 0;
+    int isWord = 0; // Флаг, указывающий на то, находимся ли мы внутри слова
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (str[i] == ' ' || str[i] == '\t' || str[i] == '\n') {
+            if (isWord) {
+                count++;
+                isWord = 0;
+            }
+        } else {
+            isWord = 1;
+        }
+    }
+    if (isWord) {
+        count++; // Увеличиваем счетчик, если последним символом в строке было слово
+    }
+    return count;
+}
+
+// Функция для копирования последних слов из одной строки в другую
+void copyLastWords(char *src, char *dest) {
+    int nSrcWords = countWords(src);
+    int nDestWords = countWords(dest);
+
+    char *lastWord = NULL;
+    char *token = strtok(src, " \t\n");
+    while (token != NULL) {
+        lastWord = token;
+        token = strtok(NULL, " \t\n");
+    }
+
+    if (lastWord != NULL) {
+        if (nSrcWords > nDestWords) {
+            strcat(dest, " "); // Добавляем пробел перед последним словом, если нужно
+            strcat(dest, lastWord);
+        }
+    }
+}
+
+#define MAX_CHARACTERS 256
+
+int wordInString(char *word, char *str) {
+    // Создаем массив для отслеживания встреченных символов
+    int characters[MAX_CHARACTERS] = {0};
+
+    // Заполняем массив для символов в слове
+    int wordLength = strlen(word);
+    for (int i = 0; i < wordLength; i++) {
+        characters[tolower(word[i])] = 1;
+    }
+
+    // Проверяем, содержит ли строка все символы из слова
+    int strLength = strlen(str);
+    for (int i = 0; i < strLength; i++) {
+        if (characters[tolower(str[i])] == 1) {
+            characters[tolower(str[i])] = 0; // Символ найден, устанавливаем его как использованный
+        }
+    }
+
+    // Проверяем, все ли символы из слова были найдены в строке
+    for (int i = 0; i < MAX_CHARACTERS; i++) {
+        if (characters[i] == 1) {
+            return 0; // Не все символы из слова найдены
+        }
+    }
+
+    return 1; // Все символы из слова найдены
+}
+// Функция для проверки, содержит ли символ букву 'а'
+int containsA(char c) {
+    return c == 'a' || c == 'A';
+}
+
+// Функция для вывода слова, предшествующего первому слову с буквой 'а'
+WordBeforeFirstWordWithAReturnCode getWordBeforeFirstWordWithA(char *s, WordDescriptor *w) {
+    int i, j = 0;
+    int wordStart = 0;
+    int foundAWord = 0;
+
+    // Перебираем символы в строке
+    for (i = 0; s[i] != '\0'; i++) {
+        // Если нашли разделитель слов
+        if (s[i] == ' ' || s[i] == '\t' || s[i] == '\n') {
+            // Если предыдущее слово содержало 'a', завершаем цикл
+            if (foundAWord) {
+                break;
+            }
+            // Иначе обновляем начало следующего слова
+            wordStart = i + 1;
+        }
+            // Если символ - буква 'a'
+        else if (containsA(s[i])) {
+            // Если это первое слово с буквой 'a'
+            if (!foundAWord) {
+                // Если слово начинается сразу с буквы 'a'
+                if (wordStart == 0) {
+                    return FIRST_WORD_WITH_A;
+                }
+                // Копируем предыдущее слово в структуру
+                strncpy(w->word, s + wordStart, i - wordStart);
+                w->word[i - wordStart] = '\0'; // Добавляем завершающий нуль-символ
+                w->length = i - wordStart;
+                foundAWord = 1;
+            }
+        }
+    }
+
+    // Если строка пустая
+    if (i == 0) {
+        return EMPTY_STRING;
+    }
+        // Если не нашли слово с 'a'
+    else if (!foundAWord) {
+        return NOT_FOUND_A_WORD_WITH_A;
+    }
+        // Если нашли слово с 'a'
+    else {
+        return WORD_FOUND;
+    }
 }

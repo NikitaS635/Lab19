@@ -10,19 +10,24 @@
 typedef struct {
     char *begin; // Начало слова
     char *end;   // Конец слова
+    char word[MAX_WORD_SIZE];
+    int length;
 } WordDescriptor;
 typedef struct BagOfWords {
     WordDescriptor words[MAX_N_WORDS_IN_STRING];
     size_t size;
 } BagOfWords;
 
+// Перечисление для кодов возврата
 typedef enum {
-    EMPTY_STRING,
-    NOT_FOUND_A_WORD_WITH_A,
     FIRST_WORD_WITH_A,
-    WORD_FOUND
+    NOT_FOUND_A_WORD_WITH_A,
+    WORD_FOUND,
+    EMPTY_STRING
 } WordBeforeFirstWordWithAReturnCode;
-
+int containsA(char c);
+// Функция для вывода слова, предшествующего первому слову с буквой 'а'
+WordBeforeFirstWordWithAReturnCode getWordBeforeFirstWordWithA(char *s, WordDescriptor *w);
 void replace(char *source, char *w1, char *w2);
 void wordDescriptorToString(WordDescriptor word, char *destination);
 // Функция для определения наличия пары слов с одинаковым набором букв
@@ -51,7 +56,14 @@ char* copyIf(const char *beginSource, const char *endSource, char *beginDestinat
 char* copyIfReverse(char *rbeginSource, const char *rendSource, char *beginDestination, int (*f)(int));
 // Функция для удаления пробельных символов из строки
 void removeNonLetters(char *s);
+void reverseString(char *str, int start, int end);
+void read_word(char *s, int *i, char *w);
 
+int proverka(char *w1, char *w2);
+
+void prir(char *w, char *c);
+
+void removeLastWord(char *str);
 
 // Функция для тестирования
 void assertString(const char *expected, char *got,
@@ -59,5 +71,15 @@ void assertString(const char *expected, char *got,
                   int line);
 // Функция для удаления лишних пробелов между словами
 void removeExtraSpaces(char *s);
+void removePalindromes(char *str);
 
+// Функция для подсчета числа слов в строке
+int countWords(char *str);
+
+// Функция для копирования последних слов из одной строки в другую
+void copyLastWords(char *src, char *dest);
+
+#define MAX_CHARACTERS 256
+
+int wordInString(char *word, char *str);
 #endif // STRING__H

@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/User2/CLionProjects/untitled/libs
+# Install script for directory: C:/Users/User2/CLionProjects/untitled copy/libs
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,11 +39,11 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/User2/CLionProjects/untitled/cmake-build-debug/libs/data_structures/cmake_install.cmake")
+  include("C:/Users/User2/CLionProjects/untitled copy/cmake-build-debug/libs/data_structures/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/User2/CLionProjects/untitled/cmake-build-debug/libs/algorithms/cmake_install.cmake")
+  include("C:/Users/User2/CLionProjects/untitled copy/cmake-build-debug/libs/algorithms/cmake_install.cmake")
 endif()
 
